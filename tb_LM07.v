@@ -7,8 +7,9 @@ wire CS,SCK;
 wire SEL0,SEL1;
 reg RSTN,SYSCLK;
 wire SIO;
+wire [7:0] data_latched;
 
-LM07_read lm(RSTN,SYSCLK,SIO,CS,SEL0,SEL1,SCK);
+LM07_read lm(RSTN,SYSCLK,SIO,CS,SEL0,SEL1,SCK,data_latched);
 LM07 lm1(CS,SCK,SIO);
 
 always #5 SYSCLK <= ~SYSCLK;
