@@ -1,30 +1,28 @@
-`define temperature 16'h4400
-`define CS_pulse 4                                 //to load the value of TEMP sensor after a certain pulse , in this case 4th pulse
-module LM70( SIO, SCK, CS ) 
+//Define
+`define TEMP_SET  16'h44C0
 
-input SCK,CS;
-output SIO;
+module LM07(CS, SCK, SIO);
+  output SIO;
+  input SCK, CS;
 
-reg reset = 1'b1;
-reg [15:0] temp;
-int count=0;
+  reg [15:0] shift_reg;
+  wire clk_gated;
 
-assign gated_clk = ~CS & SCK;
-assign SIO = temp[7];
+  initial begin
+    shift_reg = `TEMP_SET; 
+  end
+  
+  assign SIO = shift_reg[15];
 
+  assign clk_gated = ~CS & SCK;
 
-always@(SCK) begin
-   count <= count+1;
-   if (count==CS_pulse) begin
-      temp <= temperature
+  always @(CS)
+   begin
+     shift_reg = `TEMP_SET;
    end
-end         
 
-
-always@(posedge gated_clk) begin
-   if (~CS) begin
-      temp <= temperature>>1;
-   end
-end
-                          
+  always @(negedge clk_gated)
+    begin
+      shift_reg = shift_reg<<1;
+    end
 endmodule
