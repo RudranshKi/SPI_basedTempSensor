@@ -21,6 +21,6 @@ initial begin
     RSTN = 1'b0;
     SYSCLK = 1'b0;
     #5 RSTN = 1'b1;
-    #800 $finish;
+    #2000 $finish;
 end
 endmodule

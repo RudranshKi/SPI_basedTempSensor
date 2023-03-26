@@ -2,10 +2,6 @@
 
 
 //DEFINES
-`define RST_COUNT       5'b00000
-`define MAX_COUNT       5'b11100
-`define SPI_IDLE	    1'b0
-`define SPI_READ	    1'b1
 `define CS_LOW_COUNT    5'd10 
 `define CS_HIGH_COUNT   5'd28
 `define CS_initial      1'b1;
@@ -14,7 +10,7 @@
 module LM07_read(RSTN,SYSCLK,SIO,CS,SEL0,SEL1,SCK,data_latched);
 
 input RSTN,SYSCLK,SIO;
-output reg CS = `CS_initial;
+output reg CS  = `CS_initial;
 output reg SCK =`SCK_initial;
 output SEL0;
 output SEL1;
