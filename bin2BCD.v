@@ -7,7 +7,6 @@ module bin2BCD(bin,BCD1,BCD2,reset,clk);
   reg [3:0] bcd_2 = 4'b0;
   reg [3:0] bcd_1 = 4'b0; 
   reg [4:0] binary;
-  integer i;
   
   parameter start   = 0;
   parameter shift_1 = 1;

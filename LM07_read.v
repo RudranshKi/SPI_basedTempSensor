@@ -4,8 +4,8 @@
 //DEFINES
 `define CS_LOW_COUNT    5'd10 
 `define CS_HIGH_COUNT   5'd28
-`define CS_initial      1'b1;
-`define SCK_initial     1'b1;
+`define CS_initial      1'b1
+`define SCK_initial     1'b1
 
 module LM07_read(RSTN,SYSCLK,SIO,CS,SEL0,SEL1,SCK,data_latched,displayLSB,displayMSB);
 
@@ -14,8 +14,11 @@ output reg CS  = `CS_initial;
 output reg SCK =`SCK_initial;
 output SEL0;
 output SEL1;
-output reg [7:0] data_latched;
+output reg [7:0] data_latched;         //remove output
+//output [7:0] data;                     //final output
 
+//reg SEL_EN = 1'b1;                     // to choose 7 segment display
+//wire [3:0] display_data;
 reg [3:0] count_SCK=4'd0;
 reg [4:0] count=1'b1;
 reg [7:0] data_out;
@@ -55,6 +58,10 @@ always@(negedge SYSCLK , negedge RSTN) begin
     end
 end
 
+//always@(posedge SYSCLK, negedge SYSCLK) begin
+//    SEL_EN <= ~SEL_EN;
+//end
+
 always@(posedge SCK) begin
         count_SCK <= count_SCK + 1;
         data_out    = data_out<<1;                   // to negate the 15th bit from temp sensor since our sensor counts from 00-99 with one sign bit so essentially 8 bits from which 7 bits are for temp sensor and one bit for sign
@@ -75,4 +82,9 @@ always@(negedge chk_state) begin
     data_latched <= 8'd0;
 end
 
+//assign SEL1 = (SEL_EN==1'b1) ? 1'b0 : 1'b1;
+//assign SEL0 = (SEL_EN==1'b0) ? 1'b1 : 1'b0;
+//assign display_data = (SEL1== 1'b1) ? displayMSB : displayLSB;
+//assign data[7:4] = displayMSB;
+//assign data[3:0] = display_data;
 endmodule
