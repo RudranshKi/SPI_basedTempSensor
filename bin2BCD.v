@@ -1,12 +1,14 @@
-module bin2BCD(bin,BCD1,BCD2,reset,clk);
+module bin2BCD(bin,BCD1,BCD2,reset,clk,if_done);
   input  [6:0] bin;
   output [3:0] BCD1;
   output [3:0] BCD2;
+  output reg if_done;                   //to prevent fluctuations in displaying through 7 seg display, it acknowledges the device when to start showing the BCD number
   input clk;
   input reset;
   reg [3:0] bcd_2 = 4'b0;
   reg [3:0] bcd_1 = 4'b0; 
   reg [4:0] binary;
+
   
   parameter start   = 0;
   parameter shift_1 = 1;
@@ -44,6 +46,7 @@ module bin2BCD(bin,BCD1,BCD2,reset,clk);
                 bcd_1 <= {1'b0,1'b0,bin[6:5]};
                 bcd_2 <= 4'b0;
                 next_state <= shift_1;
+                if_done <= 1'b0;
                 end
       shift_1 : begin
                 bcd_2 <= {bcd_2[2:0],bcd_1[3]};
@@ -113,6 +116,7 @@ module bin2BCD(bin,BCD1,BCD2,reset,clk);
                 bcd_2 <= {bcd_2[2:0],bcd_1[3]};
                 bcd_1 <= {bcd_1[2:0],binary[4]};
                 binary <= {binary[3:0],1'b0};
+                if_done <= 1'b1;
                 end
     endcase
   end

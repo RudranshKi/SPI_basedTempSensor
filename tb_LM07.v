@@ -7,12 +7,10 @@ wire CS,SCK;
 wire SEL0,SEL1;
 reg RSTN,SYSCLK;
 wire SIO;
-wire [7:0] data_latched;
-wire [3:0] displayLSB;
-wire [3:0] displayMSB;
-//wire [7:0] data;
+wire [1:0] disp;
+wire [7:0] data;
 
-LM07_read lm(RSTN,SYSCLK,SIO,CS,SEL0,SEL1,SCK,data_latched,displayLSB,displayMSB);
+LM07_read lm(RSTN,SYSCLK,SIO,CS,disp,SCK,data);
 LM07 lm1(CS,SCK,SIO);
 
 always #5 SYSCLK <= ~SYSCLK;
@@ -23,6 +21,6 @@ initial begin
     RSTN = 1'b0;
     SYSCLK = 1'b0;
     #5 RSTN = 1'b1;
-    #1000 $finish;
+    #4000 $finish;
 end
 endmodule
