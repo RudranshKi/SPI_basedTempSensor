@@ -1,5 +1,5 @@
 //Define
-`define TEMP_SET  16'h0B9F
+`define TEMP_SET  16'h65C0
 
 module LM07(CS, SCK, SIO);
   output SIO;

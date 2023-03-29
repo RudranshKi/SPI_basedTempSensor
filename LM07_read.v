@@ -1,5 +1,5 @@
 `include "bin2BCD.v"
-
+`include "seve_seg.v"
 
 //DEFINES
 `define CS_LOW_COUNT    5'd12 
@@ -7,27 +7,33 @@
 `define CS_initial      1'b1
 `define SCK_initial     1'b1
 
-module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data);
+module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data,data_disp,disp_LSB,disp_MSB);
 
 input RSTN,SYSCLK,SIO;
 output reg CS  = `CS_initial;
 output reg SCK =`SCK_initial;
-output [1:0] disp;
+output [1:0] disp;               // to choose the 7 segment display
 reg [7:0] data_latched;         //remove output
-output [7:0] data;                     //final output
+output [7:0] data;              //final output
+output [7:0] data_disp;         //final output through decoder
 
-reg SEL_EN = 1'b1;                     // to choose 7 segment display
+reg SEL_EN = 1'b1;               // to choose 7 segment display selection process of disp
 wire [3:0] display_data;
 reg [3:0] count_SCK=4'd0;
 reg [4:0] count=1'b1;
 reg [7:0] data_out;
-reg chk_state;                          //remove output
-reg RSTN_BCD = 1'b1;                    //remove output
+reg chk_state;                   //remove output
+reg RSTN_BCD = 1'b1;             //remove output
 wire [3:0] displayLSB;           //remove output
 wire [3:0] displayMSB;           //remove output
 wire if_done;
+output wire [6:0] disp_LSB;      //remove output
+output wire [6:0] disp_MSB;      // remove output
+wire CS_;
+wire CS_MSB;
 
 bin2BCD b2B(data_latched[6:0],displayLSB,displayMSB,RSTN_BCD,SYSCLK,if_done);
+seve_seg sg();
 
 always@(posedge SYSCLK) begin
     count <= count+1;
@@ -88,4 +94,5 @@ assign disp[1] = ((if_done == 1'b1) && (SEL_EN == 1'b1) && (CS == 1'b1)) ? 1'b1 
 assign display_data = (disp[1]== 1'b1) ? displayMSB : displayLSB;
 assign data[7:4] = displayMSB;
 assign data[3:0] = display_data;
+assign disp_decod = (SEL_EN == 1'b0) ? 
 endmodule
