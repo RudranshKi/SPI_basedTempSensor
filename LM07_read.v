@@ -7,7 +7,7 @@
 `define CS_initial      1'b1
 `define SCK_initial     1'b1
 
-module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data);
+module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data,chk_state,if_done);
 
 input RSTN,SYSCLK,SIO;
 output reg CS  = `CS_initial;
@@ -22,11 +22,11 @@ wire [3:0] display_data;
 reg [3:0] count_SCK=4'd0;
 reg [4:0] count=1'b1;
 reg [7:0] data_out;
-reg chk_state;                   //remove output
+output reg chk_state;                   //remove output
 reg RSTN_BCD = 1'b1;             //remove output
 wire [3:0] displayLSB;           //remove output
 wire [3:0] displayMSB;           //remove output
-wire if_done;
+output wire if_done;             //remove output
 
 bin2BCD b2B(data_latched[6:0],displayLSB,displayMSB,RSTN_BCD,SYSCLK,if_done);
 seve_seg sg();

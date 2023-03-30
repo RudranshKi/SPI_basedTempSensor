@@ -10,8 +10,10 @@ wire SIO;
 wire [1:0] disp;
 wire [7:0] data;
 //wire [7:0] data_disp;
+wire chk_state;
+wire if_done;
 
-LM07_read lm(RSTN,SYSCLK,SIO,CS,disp,SCK,data);
+LM07_read lm(RSTN,SYSCLK,SIO,CS,disp,SCK,data,chk_state,if_done);
 LM07 lm1(CS,SCK,SIO);
 
 always #5 SYSCLK <= ~SYSCLK;
