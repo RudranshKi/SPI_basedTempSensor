@@ -9,10 +9,9 @@ reg RSTN,SYSCLK;
 wire SIO;
 wire [1:0] disp;
 wire [7:0] data;
-wire [7:0] data_disp;
-wire [6:0] disp_LSB;
-wire [6:0] disp_MSB;
-LM07_read lm(RSTN,SYSCLK,SIO,CS,disp,SCK,data,data_disp,disp_LSB,disp_MSB);
+//wire [7:0] data_disp;
+
+LM07_read lm(RSTN,SYSCLK,SIO,CS,disp,SCK,data);
 LM07 lm1(CS,SCK,SIO);
 
 always #5 SYSCLK <= ~SYSCLK;
