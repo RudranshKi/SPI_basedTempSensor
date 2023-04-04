@@ -3,7 +3,7 @@ module seve_seg(A,out,cs);
   input [3:0] A;
   output reg [6:0] out;
   input cs;
-  always@(A) begin
+  always@(A,cs) begin
   if (~cs) begin
       case ({A})
         4'b0000 : assign out = 7'h3f;

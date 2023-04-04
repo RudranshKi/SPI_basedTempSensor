@@ -7,7 +7,7 @@
 `define CS_initial      1'b1
 `define SCK_initial     1'b1
 
-module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data,chk_state,if_done);
+module LM07_read(RSTN,SYSCLK,SIO,CS,disp,SCK,data,chk_state,disp_seg_LSB,disp_seg_MSB,seg_disp,ready_seg,displayLSB,displayMSB);
 
 input RSTN,SYSCLK,SIO;
 output reg CS  = `CS_initial;
@@ -15,21 +15,26 @@ output reg SCK =`SCK_initial;
 output [1:0] disp;               // to choose the 7 segment display
 reg [7:0] data_latched;         //remove output
 output [7:0] data;              //final output
-//output [7:0] data_disp;         //final output through decoder
+//output [7:0] data_disp;       //final output through decoder
 
 reg SEL_EN = 1'b1;               // to choose 7 segment display selection process of disp
 wire [3:0] display_data;
 reg [3:0] count_SCK=4'd0;
 reg [4:0] count=1'b1;
 reg [7:0] data_out;
-output reg chk_state;                   //remove output
+output reg chk_state;            //remove output
 reg RSTN_BCD = 1'b1;             //remove output
-wire [3:0] displayLSB;           //remove output
-wire [3:0] displayMSB;           //remove output
-output wire if_done;             //remove output
+output wire [3:0] displayLSB;           //remove output
+output wire [3:0] displayMSB;           //remove output
+wire if_done;             //remove output
+output reg ready_seg = 1'b1;                     //cs for seven segment display
+output wire seg_disp;                   //output select line for 7 seg  
+output [6:0] disp_seg_LSB;  
+output [6:0] disp_seg_MSB;  
 
 bin2BCD b2B(data_latched[6:0],displayLSB,displayMSB,RSTN_BCD,SYSCLK,if_done);
-seve_seg sg();
+seve_seg sg(displayLSB,disp_seg_LSB,seg_disp);
+seve_seg sg1(displayMSB,disp_seg_MSB,seg_disp);
 
 always@(posedge SYSCLK) begin
     count <= count+1;
@@ -90,4 +95,12 @@ assign disp[1] = ((if_done == 1'b1) && (SEL_EN == 1'b1) && (CS == 1'b1)) ? 1'b1 
 assign display_data = (disp[1]== 1'b1) ? displayMSB : displayLSB;
 assign data[7:4] = displayMSB;
 assign data[3:0] = display_data;
+
+always@(negedge SYSCLK) begin
+    if ((disp[0] == 1'b0) && (disp[1] == 1'b1) ) begin
+        ready_seg <=  1'b0;
+    end
+    else ready_seg <=  1'b1;
+end
+assign seg_disp = (~ready_seg)? 1'b0 : 1'b1;
 endmodule
