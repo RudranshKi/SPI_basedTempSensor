@@ -1,16 +1,19 @@
-__SPI-based Mixed-Signal Modelling Temperature Sensor__
+# __SPI-based Mixed-Signal Modelling Temperature Sensor__
 
-This is a Verilog implementation of a temperature sensor that uses a Serial Peripheral Interface (SPI) to communicate with a microcontroller. The design is purely digital and is modeled to provide accurate temperature readings with minimal power consumption.
-Features
+This is a Verilog implementation of a temperature sensor that uses a Serial Peripheral Interface (SPI) to communicate with a control logic.  <br>
+<br>
+<br>
+Features <br>
+   - 10-bit temperature resolution <br>
+   - SPI communication protocol    <br>
+   - 2 &ordm; temperature resolution <br>
 
-    10-bit temperature resolution
-    SPI communication protocol
-    Low power consumption
-    Compact design
+Tools used-
 
-Dependencies
-
-    Verilog simulation environment
+    Icarus Verilog
+    GTKWave
+    Terminal
+    VIM
 
 Getting Started
 
