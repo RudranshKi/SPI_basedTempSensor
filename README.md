@@ -15,24 +15,6 @@ Tools used-
     Terminal
     VIM
 
-Getting Started
 
-    Clone the repository:
+git clone https://github.com/Rudranshki/SPI_basedTempSensor
 
-    bash
-
-git clone https://github.com/username/repository.git
-
-Navigate to the project directory:
-
-bash
-
-cd repository
-
-Run the Verilog simulation environment:
-
-bash
-
-verilog -gui temperature_sensor_tb.v temperature_sensor.v
-
-Follow the simulation instructions to test the temperature sensor.
