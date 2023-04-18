@@ -6,7 +6,8 @@ This is a Verilog implementation of a temperature sensor that uses a Serial Peri
 Features <br>
    - 10-bit temperature sensor <br>
    - SPI communication protocol    <br>
-   - 2 &ordm; temperature resolution <br>
+   - 2&ordm; temperature resolution <br>
+   - Counts from 0 to 99 degrees celsius <br>
 
 Tools used-
 
@@ -16,5 +17,9 @@ Tools used-
     VIM
 
 
-git clone https://github.com/Rudranshki/SPI_basedTempSensor
+git clone 
+``````````
+https://github.com/Rudranshki/SPI_basedTempSensor
+
+``````````
 
