@@ -4,7 +4,6 @@ This is a Verilog implementation of a temperature sensor that uses a Serial Peri
 <br>
 <br>
 Features <br>
-   - tested in fpga
    - 10-bit temperature sensor <br>
    - SPI communication protocol    <br>
    - 2&ordm; temperature resolution <br>
